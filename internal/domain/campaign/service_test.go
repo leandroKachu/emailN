@@ -2,6 +2,7 @@ package campaign
 
 import (
 	"emailn/internal/domain/campaign/contract"
+	internalerrors "emailn/internal/internal-errors"
 	"errors"
 	"testing"
 
@@ -71,5 +72,5 @@ func Test_Create_Campaign_Saved_Database(t *testing.T) {
 	service.Repository = repositoryMock
 	_, err := service.Create(newCampaign)
 
-	assert.Equal("Error to connect to database", err.Error())
+	assert.True(errors.Is(internalerrors.ErrInternal, err))
 }
