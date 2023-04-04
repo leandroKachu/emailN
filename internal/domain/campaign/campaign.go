@@ -1,34 +1,25 @@
 package campaign
 
 import (
-	"errors"
+	internalerrors "emailn/internal/internal-errors"
 	"time"
 
 	"github.com/rs/xid"
 )
 
 type Contact struct {
-	Email string
+	Email string `validate:"email"`
 }
 
 type Campaign struct {
-	ID        string
-	Name      string
-	CreatedOn time.Time
-	Content   string
-	Contacts  []Contact
+	ID        string    `validate:"required"`
+	Name      string    `validate:"min=5,max=20"`
+	CreatedOn time.Time `validate:"required"`
+	Content   string    `validate:"min=5,max=1028"`
+	Contacts  []Contact `validate:"min=1,dive"`
 }
 
 func NewCampaign(name string, content string, emails []string) (*Campaign, error) {
-
-	if name == "" {
-		return nil, errors.New("name must not be empty")
-
-	} else if content == "" {
-		return nil, errors.New("content must not be empty")
-	} else if len(emails) == 0 {
-		return nil, errors.New("contacts must not be empty")
-	}
 
 	contacts := make([]Contact, len(emails))
 
@@ -36,11 +27,18 @@ func NewCampaign(name string, content string, emails []string) (*Campaign, error
 		contacts[index].Email = email
 	}
 
-	return &Campaign{
+	camapaign := &Campaign{
 		ID:        xid.New().String(),
 		Name:      name,
 		Content:   content,
 		CreatedOn: time.Now(),
 		Contacts:  contacts,
-	}, nil
+	}
+	err := internalerrors.ValidateStruct(camapaign)
+
+	if err == nil {
+		return camapaign, nil
+	}
+
+	return nil, err
 }
