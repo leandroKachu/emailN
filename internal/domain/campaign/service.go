@@ -20,6 +20,5 @@ func (s *Service) Create(newCampaign contract.NewCampaign) (string, error) {
 	if err != nil {
 		return "", internalerrors.ErrInternal
 	}
-
 	return campaign.ID, nil
 }

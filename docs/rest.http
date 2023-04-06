@@ -1,0 +1,14 @@
+GET http://localhost:3000/campaigns
+
+###
+
+
+###
+
+POST http://localhost:3000/campaigns
+
+{
+    "name" : "12345",     
+	"content" : "boooodie",
+	"emails":  ["Leandro2@hotmail.com"]
+}
