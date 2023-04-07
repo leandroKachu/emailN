@@ -91,3 +91,11 @@ func Test_NewCampaign_MustValidateContactsMax(t *testing.T) {
 	_, err := NewCampaign(name, content, []string{"email_invalid"})
 	assert.Equal("email is invalid", err.Error())
 }
+
+func Test_NewCampaign_MustStartWithStatusPending(t *testing.T) {
+	assert := assert.New(t)
+	status := "Pending"
+
+	campaign, _ := NewCampaign(name, content, contacts)
+	assert.Equal(campaign.Status, status)
+}
