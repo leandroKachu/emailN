@@ -3,6 +3,7 @@ package endpoints
 import (
 	"emailn/internal/domain/campaign/contract"
 	internalmock "emailn/internal/test/mock"
+	"errors"
 	"fmt"
 	"net/http"
 	"net/http/httptest"
@@ -32,4 +33,19 @@ func Test_CampaignsGetById_should_return_campaign(t *testing.T) {
 	assert.Equal(200, status)
 	assert.Equal(campaign.ID, response.(*contract.CampaignResponse).ID)
 	assert.Equal(campaign.Name, response.(*contract.CampaignResponse).Name)
+}
+
+func Test_CampaignsGetById_should_return_error(t *testing.T) {
+	assert := assert.New(t)
+	service := new(internalmock.CampaignServiceMock)
+	ErrExpected := errors.New("Something went wrong")
+	service.On("GetBy", mock.Anything).Return(nil, ErrExpected)
+	handler := Handler{CampaignService: service}
+	req, _ := http.NewRequest("GET", "/", nil)
+	rr := httptest.NewRecorder()
+
+	_, _, ErrReturned := handler.CampaignGetById(rr, req)
+
+	assert.Equal(ErrReturned, ErrExpected)
+
 }
