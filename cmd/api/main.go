@@ -15,8 +15,10 @@ func main() {
 	r.Use(middleware.Logger)
 	r.Use(middleware.RequestID)
 
+	db := database.NewDb()
+
 	campaignService := campaign.ServiceImp{
-		Repository: &database.CampaignRepository{},
+		Repository: &database.CampaignRepository{DB: db},
 	}
 
 	handler := endpoints.Handler{
