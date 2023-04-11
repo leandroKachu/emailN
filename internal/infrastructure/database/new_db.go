@@ -8,7 +8,7 @@ import (
 )
 
 func NewDb() *gorm.DB {
-	dsn := "host=localhost user=leandro password=postgres! dbname=golangdb port=5432"
+	dsn := "host=localhost user=leandro password=postgres! dbname=leandro port=5432"
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 
 	if err != nil {
