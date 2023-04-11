@@ -10,7 +10,7 @@ import (
 type Contact struct {
 	ID         string `validate:"required" gorm:"size:50"`
 	Email      string `validate:"email" gorm:"size:100"`
-	CampaignID string `validate:"campaign_id" gorm:"size:50"`
+	CampaignID string ` gorm:"size:50"`
 }
 
 type Campaign struct {
