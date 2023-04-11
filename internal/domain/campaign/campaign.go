@@ -8,18 +8,18 @@ import (
 )
 
 type Contact struct {
-	ID         string `validate:"required"`
-	Email      string `validate:"email"`
-	CampaignID string `validate:"campaign_id"`
+	ID         string `validate:"required" gorm:"size:50"`
+	Email      string `validate:"email" gorm:"size:100"`
+	CampaignID string `validate:"campaign_id" gorm:"size:50"`
 }
 
 type Campaign struct {
-	ID        string    `validate:"required"`
-	Name      string    `validate:"min=5,max=20"`
+	ID        string    `validate:"required" gorm:"size:50"`
+	Name      string    `validate:"min=5,max=20" gorm:"size:20"`
 	CreatedOn time.Time `validate:"required"`
-	Content   string    `validate:"min=5,max=1028"`
+	Content   string    `validate:"min=5,max=1028" gorm:"size:1028"`
 	Contacts  []Contact `validate:"min=1,dive"`
-	Status    string    `validate:"required"`
+	Status    string    `validate:"required" gorm:"size:20"`
 }
 
 const (
