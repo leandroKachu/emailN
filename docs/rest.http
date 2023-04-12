@@ -1,4 +1,4 @@
-GET http://localhost:3000/campaigns
+GET http://localhost:3000/campaigns/cgrh0b906e6hb97ildrg
 
 ###
 
@@ -8,7 +8,7 @@ GET http://localhost:3000/campaigns
 POST http://localhost:3000/campaigns
 
 {
-    "Name" : "Leandro primeiro",     
+    "Name" : "Leandro second",     
 	"Content" : "boooodie",
 	"emails":  ["Leandro2@hotmail.com"]
 }
