@@ -11,7 +11,7 @@ type CampaignRepository struct {
 }
 
 func (c *CampaignRepository) Save(campaign *campaign.Campaign) error {
-	tx := c.DB.Create(campaign)
+	tx := c.DB.Save(campaign)
 	return tx.Error
 }
 

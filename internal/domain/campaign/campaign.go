@@ -23,10 +23,15 @@ type Campaign struct {
 }
 
 const (
-	Pending = "Pending"
-	Started = "iniciado"
-	Done    = "done"
+	Pending  = "Pending"
+	Started  = "iniciado"
+	Done     = "done"
+	Canceled = "canceled"
 )
+
+func (c *Campaign) Cancel() {
+	c.Status = Canceled
+}
 
 func NewCampaign(name string, content string, emails []string) (*Campaign, error) {
 
