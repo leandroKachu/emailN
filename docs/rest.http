@@ -2,13 +2,19 @@ GET http://localhost:3000/campaigns/cgrh0b906e6hb97ildrg
 
 ###
 
+PATCH http://localhost:3000/campaigns/cancel/cgrh0b906e6hb97ildrg
+
 
 ###
 
 POST http://localhost:3000/campaigns
 
 {
-    "Name" : "Leandro second",     
-	"Content" : "boooodie",
-	"emails":  ["Leandro2@hotmail.com"]
+    "Name" : "LeandroL da sil",     
+	"Content" : "bodyyyy",
+	"emails":  ["Leandaaro222@hotmail.com"]
 }
+
+###
+
+DELETE http://localhost:3000/campaigns/delete/cgriga106e6nr0v0p4t0
