@@ -9,7 +9,6 @@ import (
 type Service interface {
 	Create(newCampaign contract.NewCampaign) (string, error)
 	GetBy(id string) (*contract.CampaignResponse, error)
-	Cancel(id string) error
 	Delete(id string) error
 }
 
@@ -23,11 +22,11 @@ func (s *ServiceImp) Create(newCampaign contract.NewCampaign) (string, error) {
 	if err != nil {
 		return "", err
 	}
-
 	err = s.Repository.Create(campaign)
 	if err != nil {
 		return "", internalerrors.ErrInternal
 	}
+
 	return campaign.ID, nil
 }
 
@@ -36,7 +35,7 @@ func (s *ServiceImp) GetBy(id string) (*contract.CampaignResponse, error) {
 	campaign, err := s.Repository.GetBy(id)
 
 	if err != nil {
-		return nil, internalerrors.ErrInternal
+		return nil, internalerrors.ProcessErrorToReturn(err)
 	}
 
 	return &contract.CampaignResponse{
@@ -46,30 +45,6 @@ func (s *ServiceImp) GetBy(id string) (*contract.CampaignResponse, error) {
 		Status:               campaign.Status,
 		AmountContactsToSend: len(campaign.Contacts),
 	}, nil
-
-}
-
-func (s *ServiceImp) Cancel(id string) error {
-
-	campaign, err := s.Repository.GetBy(id)
-
-	if err != nil {
-		return internalerrors.ErrInternal
-	}
-
-	if campaign.Status != Pending {
-		return errors.New("campaign status is invalid")
-	}
-
-	campaign.Cancel()
-	err = s.Repository.Update(campaign)
-
-	if err != nil {
-		return internalerrors.ErrInternal
-	}
-
-	return nil
-
 }
 
 func (s *ServiceImp) Delete(id string) error {
@@ -77,21 +52,18 @@ func (s *ServiceImp) Delete(id string) error {
 	campaign, err := s.Repository.GetBy(id)
 
 	if err != nil {
-		return internalerrors.ErrInternal
+		return internalerrors.ProcessErrorToReturn(err)
 	}
 
 	if campaign.Status != Pending {
-		return errors.New("campaign status is invalid")
+		return errors.New("Campaign status invalid")
 	}
 
 	campaign.Delete()
-
 	err = s.Repository.Delete(campaign)
-
 	if err != nil {
 		return internalerrors.ErrInternal
 	}
 
 	return nil
-
 }
