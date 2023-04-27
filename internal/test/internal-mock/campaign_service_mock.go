@@ -1,7 +1,7 @@
-package mock
+package internalmock
 
 import (
-	"emailn/internal/domain/campaign/contract"
+	"emailn/internal/contract"
 
 	"github.com/stretchr/testify/mock"
 )
@@ -21,10 +21,6 @@ func (r *CampaignServiceMock) GetBy(id string) (*contract.CampaignResponse, erro
 		return nil, args.Error(1)
 	}
 	return args.Get(0).(*contract.CampaignResponse), args.Error(1)
-}
-
-func (r *CampaignServiceMock) Cancel(id string) error {
-	return nil
 }
 
 func (r *CampaignServiceMock) Delete(id string) error {
